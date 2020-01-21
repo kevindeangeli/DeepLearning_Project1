@@ -9,7 +9,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sympy as sym
+from errorFunctions import *
 
-Newweights = [[[10,10],[11,11],[12,12]], [[13,13],[13,13]]]
+a= np.array([1,2,3,4,7])
+b= np.array([3,3,3,3,3])
 
-print(Newweights[0][1])
+print(mse(a,b))
+
+for i,k in enumerate(b):
+    print(i)
+    print(k)
+    print(" ")

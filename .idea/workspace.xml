@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c3a3359-8c91-4849-b34b-5a7f67e85924" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/caca.py" beforeDir="false" afterPath="$PROJECT_DIR$/scarchCode2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activation.py" beforeDir="false" afterPath="$PROJECT_DIR$/activation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errorFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/errorFunctions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/project1.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scratchCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/scratchCode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratchCode3.py" beforeDir="false" afterPath="$PROJECT_DIR$/scratchCode3.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="219" column="17" selection-start-line="219" selection-start-column="17" selection-end-line="219" selection-end-column="17" />
+            <state relative-caret-position="-2276">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
               <folding>
                 <element signature="e#85#104#0" expanded="true" />
               </folding>
@@ -28,19 +30,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/numpy/core/multiarray.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="791" selection-start-line="791" selection-end-line="791" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/errorFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="270">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -49,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/activation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -57,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scarchCode2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-804">
-              <caret line="63" selection-start-line="63" selection-end-line="63" />
+            <state relative-caret-position="159">
+              <caret line="259" column="13" selection-start-line="259" selection-start-column="8" selection-end-line="259" selection-end-column="13" />
               <folding>
                 <element signature="e#53#84#0" expanded="true" />
               </folding>
@@ -66,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scratchCode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="271" column="31" lean-forward="true" selection-start-line="271" selection-start-column="31" selection-end-line="271" selection-end-column="31" />
+            <state relative-caret-position="33">
+              <caret line="258" column="80" lean-forward="true" selection-start-line="258" selection-start-column="80" selection-end-line="258" selection-end-column="80" />
               <folding>
                 <element signature="e#53#84#0" expanded="true" />
               </folding>
@@ -81,8 +74,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scratchCode3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-end-line="13" />
+            <state relative-caret-position="400">
+              <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-end-line="20" />
+              <folding>
+                <element signature="e#84#102#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,9 +97,11 @@
       <find>neuronsN</find>
       <find>eta</find>
       <find>cost_der</find>
-      <find>sigmoid_prime</find>
       <find>print</find>
       <find>show</find>
+      <find>delta</find>
+      <find>layerOutput</find>
+      <find>sigmoid_prime</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -113,12 +111,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/caca.py" />
-        <option value="$PROJECT_DIR$/errorFunctions.py" />
         <option value="$PROJECT_DIR$/scarchCode2.py" />
-        <option value="$PROJECT_DIR$/scratchCode.py" />
-        <option value="$PROJECT_DIR$/scratchCode3.py" />
+        <option value="$PROJECT_DIR$/errorFunctions.py" />
         <option value="$PROJECT_DIR$/activation.py" />
+        <option value="$PROJECT_DIR$/scratchCode3.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/scratchCode.py" />
       </list>
     </option>
   </component>
@@ -133,7 +131,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="y" value="26" />
     <option name="width" value="1440" />
     <option name="height" value="800" />
   </component>
@@ -287,15 +285,15 @@
       <option name="presentableId" value="Default" />
       <updated>1579113616951</updated>
       <workItem from="1579113624541" duration="10493000" />
-      <workItem from="1579187097517" duration="32319000" />
+      <workItem from="1579187097517" duration="47815000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42812000" />
+    <option name="totallyTimeSpent" value="58308000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="800" extended-state="6" />
+    <frame x="0" y="26" width="1440" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09728183" />
@@ -303,8 +301,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24142662" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.25925925" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24142662" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.25925925" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -341,30 +339,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>47</line>
-          <option name="timeStamp" value="18" />
+          <line>67</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project1$main.coverage" NAME="main Coverage Results" MODIFIED="1579384353521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project1$main.coverage" NAME="main Coverage Results" MODIFIED="1579626804951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project1$scratchCode.coverage" NAME="scratchCode Coverage Results" MODIFIED="1579367078397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project1$caca.coverage" NAME="caca Coverage Results" MODIFIED="1579189980280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project1$scratchCode3.coverage" NAME="scratchCode3 Coverage Results" MODIFIED="1579381719465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project1$scratchCode3.coverage" NAME="scratchCode3 Coverage Results" MODIFIED="1579623255203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/gzip.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1876">
           <caret line="336" column="72" lean-forward="true" selection-start-line="336" selection-start-column="72" selection-end-line="336" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/errorFunctions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
@@ -375,33 +366,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scarchCode2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-804">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
-          <folding>
-            <element signature="e#53#84#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scratchCode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="271" column="31" lean-forward="true" selection-start-line="271" selection-start-column="31" selection-end-line="271" selection-end-column="31" />
-          <folding>
-            <element signature="e#53#84#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scratchCode3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -409,10 +373,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activation.py">
+    <entry file="file://$PROJECT_DIR$/scarchCode2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        <state relative-caret-position="159">
+          <caret line="259" column="13" selection-start-line="259" selection-start-column="8" selection-end-line="259" selection-end-column="13" />
+          <folding>
+            <element signature="e#53#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/errorFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scratchCode3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-end-line="20" />
+          <folding>
+            <element signature="e#84#102#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -423,12 +407,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/activation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="332" selection-start-line="332" selection-end-line="332" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="219" column="17" selection-start-line="219" selection-start-column="17" selection-end-line="219" selection-end-column="17" />
+        <state relative-caret-position="-2276">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
           <folding>
             <element signature="e#85#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scratchCode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="258" column="80" lean-forward="true" selection-start-line="258" selection-start-column="80" selection-end-line="258" selection-end-column="80" />
+          <folding>
+            <element signature="e#53#84#0" expanded="true" />
           </folding>
         </state>
       </provider>

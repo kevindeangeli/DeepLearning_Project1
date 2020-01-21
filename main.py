@@ -2,7 +2,6 @@
 Created by: Kevin De Angeli
 Email: kevindeangeli@utk.edu
 Date: 2020-01-15
-
 '''
 
 
@@ -15,10 +14,13 @@ import matplotlib.pyplot as plt
 
 class Neuron():
 
-    def __init__(self,inputLen, activationFun = "sigmoid", learningRate = .1, weights = None, bias = None):
+    def __init__(self,inputLen, activationFun = "sigmoid", learningRate = .5, weights = None, bias = None):
         self.inputLen = inputLen
         self.learnR = learningRate
         self.activationFunction = activationFun
+
+        self.error = 0
+        self.output = 0
 
         if weights is None:
             #set them to random:
@@ -37,6 +39,8 @@ class Neuron():
         '''
         if self.activationFunction == "sigmoid":
            return sigmoid(x)
+        #else:
+        #    return linear(x)
 
 
     def calculate(self, input):
@@ -44,9 +48,28 @@ class Neuron():
         Given an input, it will calculate the output
         :return:
         '''
-        #return np.dot(input, self.weights)
-        x= np.dot(input,self.weights) + self.bias
-        return self.activate(np.dot(input,self.weights) + self.bias)
+        self.output = self.activate(np.dot(input,self.weights) + self.bias)
+        return self.output
+
+    def neuronError(self, input, output): #may not be necessary to have this (self.error too)
+        self.error = .5((input - output)**2)
+        return self.error
+
+    def deltaTotal_delta1(self, target):
+        x=self.output - target
+        return self.output - target
+
+    def deltaOut1_deltaNet1(self):
+        x=self.output*(1-self.output)
+        return self.output*(1-self.output)
+
+    def update_weight(self, layerOutput, target):
+        for index, neuronOutput in enumerate(layerOutput):
+            x=  self.learnR * (self.deltaTotal_delta1(target)*self.deltaOut1_deltaNet1()*neuronOutput)
+            x2 = self.weights[index]
+            x3= self.weights[index] - self.learnR * (self.deltaTotal_delta1(target)*self.deltaOut1_deltaNet1()*neuronOutput)
+            self.weights[index] = self.weights[index] - self.learnR * (self.deltaTotal_delta1(target)*self.deltaOut1_deltaNet1()*neuronOutput)
+
 
 
 class FullyConnectedLayer():
@@ -57,6 +80,7 @@ class FullyConnectedLayer():
         self.learningRate = learningRate
         self.weights = weights
         self.bias = bias
+        self.layerOutput = []
 
         if weights is None:
             self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun, learningRate=self.learningRate, weights=self.weights) for i in range(numOfNeurons)]
@@ -69,11 +93,17 @@ class FullyConnectedLayer():
         Will calculate the output of all the neurons in the layer.
         :return:
         '''
-        layerOutput = []
+        self.layerOutput = []
         for neuron in self.neurons:
-            layerOutput.append(neuron.calculate(input))
+            self.layerOutput.append(neuron.calculate(input))
 
-        return layerOutput
+        return self.layerOutput
+
+    def update_Neurons(self, target, previousLayerOutput):
+        for targetIndex, neuron in enumerate(self.neurons):
+            #neuron.update_weight(   target[targetIndex], self.layerOutput)
+            neuron.update_weight(layerOutput=previousLayerOutput, target=target[targetIndex])
+
 
 
 class NeuralNetwork():
@@ -152,6 +182,11 @@ class NeuralNetwork():
 
         return output
 
+    def backPropagate(self, target):
+        for layerIndex, layer in enumerate(reversed(self.layers)): #need to go in backward order
+            if layerIndex+1 < self.layersNum:
+                x= self.layers[layerIndex ].layerOutput
+                layer.update_Neurons(target,previousLayerOutput=self.layers[layerIndex].layerOutput)
 
 
 
@@ -171,7 +206,6 @@ class NeuralNetwork():
             binary_cross_entropy_loss(output, desired_output)
 
         return error
-
 
 
 
@@ -196,6 +230,7 @@ def main():
     #there are easier ways to do this, but I'm just following the instructions.
 
     '''
+    #Random weights:
     Newweights = None
     model = NeuralNetwork(inputLen=2, layersNum = 2, neuronsNum = [3,2], activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = Newweights)
     model.showWeights()
@@ -204,22 +239,11 @@ def main():
 
 
 
-    '''
-    #Working Example:
-    
-    Newweights = [[[10, 10], [11, 11], [12, 12]], [[13, 13, 13], [13, 13, 13]]]
-    newBias = [[1,2,3],[4,5]]
-    model = NeuralNetwork(inputLen=2, layersNum=2, neuronsNum=[3, 2], activationVector=0, lossFunction="MSE",
-                          learningRate=.1, weights=Newweights, bias = newBias)
-    model.showWeights()
-    model.showBias()
-    '''
-
     #Let's try the class example by setting the bias and weights:
     Newweights = [[[.15,.20], [.25, .30]], [[.40, .45], [.5, .55]]]
     newBias = [[.35,.35],[.6,.6]]
     model = NeuralNetwork(inputLen=2, layersNum=2, neuronsNum=[2, 2], activationVector=0, lossFunction="MSE",
-                          learningRate=.1, weights=Newweights, bias = newBias)
+                          learningRate=.5, weights=Newweights, bias = newBias)
     model.showWeights()
     model.showBias()
 
@@ -227,6 +251,9 @@ def main():
     print(model.calculate([.05,.1]))
 
 
+    model.backPropagate(target= [.01, .99])
+    print("after BackProp: ")
+    model.showWeights()
 
 
 if __name__ == "__main__":
