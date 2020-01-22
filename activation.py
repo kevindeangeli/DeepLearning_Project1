@@ -13,5 +13,5 @@ def sigmoid(x):
 
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
-    return 0
-    #return sigmoid(z) * (1 - sigmoid(z))
+    x = z * (1 - z)
+    return z * (1 - z)

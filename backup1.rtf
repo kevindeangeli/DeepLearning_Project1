@@ -1,0 +1,304 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Oblique;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 Helvetica-BoldOblique;
+}
+{\colortbl;\red255\green255\blue255;\red81\green136\blue67;\red32\green32\blue32;\red191\green100\blue38;
+\red153\green168\blue186;\red160\green0\blue163;\red128\green63\blue122;\red88\green118\blue71;\red86\green132\blue173;
+\red109\green109\blue109;\red117\green114\blue185;\red254\green187\blue91;\red152\green54\blue29;}
+{\*\expandedcolortbl;;\csgenericrgb\c31765\c53333\c26275;\csgenericrgb\c12549\c12549\c12549;\csgenericrgb\c74902\c39216\c14902;
+\csgenericrgb\c60000\c65882\c72941;\csgenericrgb\c62745\c0\c63922;\csgenericrgb\c50196\c24706\c47843;\csgenericrgb\c34510\c46275\c27843;\csgenericrgb\c33725\c51765\c67843;
+\csgenericrgb\c42745\c42745\c42745;\csgenericrgb\c45882\c44706\c72549;\csgenericrgb\c99608\c73333\c35686;\csgenericrgb\c59608\c21176\c11373;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\i\fs38 \cf2 \cb3 '''\
+Created by: Kevin De Angeli\
+Email: kevindeangeli@utk.edu\
+Date: 2020-01-15\
+'''\
+\
+\
+
+\f1\i0 \cf4 from \cf5 errorFunctions \cf4 import \cf5 *\
+\cf4 from \cf5 activation \cf4 import \cf5 *\
+\cf4 import \cf5 numpy \cf4 as \cf5 np\
+\cf4 import \cf5 matplotlib.pyplot \cf4 as \cf5 plt\
+\
+\
+\
+\cf4 class \cf5 Neuron():\
+\
+    \cf4 def \cf6 __init__\cf5 (\cf7 self\cf4 ,\cf5 inputLen\cf4 , \cf5 activationFun = \cf8 "sigmoid"\cf4 , \cf5 learningRate = \cf9 .5\cf4 , \cf5 weights = \cf4 None, \cf5 bias = \cf4 None\cf5 ):\
+        \cf7 self\cf5 .inputLen = inputLen\
+        \cf7 self\cf5 .learnR = learningRate\
+        \cf7 self\cf5 .activationFunction = activationFun\
+\
+        \cf7 self\cf5 .output = \cf4 None \cf10 #for backprop.\
+        \cf7 self\cf5 .input = \cf4 None   \cf10 #saves the input to the neuron for backprop.\
+        \cf7 self\cf5 .newWeights = [] \cf10 #saves new weight but it doesn't update until the end of backprop. (method: updateWeight)\
+        \cf7 self\cf5 .delta = \cf4 None\
+\
+        if \cf5 weights \cf4 is None\cf5 :\
+            \cf10 #set them to random:\
+            \cf7 self\cf5 .weights = [np.random.random_sample() \cf4 for \cf10 i \cf4 in \cf11 range\cf5 (inputLen)]\
+            \cf7 self\cf5 .bias = np.random.random_sample()\
+\
+        \cf4 else\cf5 :\
+            \cf7 self\cf5 .weights = weights\
+            \cf7 self\cf5 .bias = bias\
+\
+\
+\
+    \cf4 def \cf12 updateWeight\cf5 (\cf7 self\cf5 ):\
+        \cf7 self\cf5 .weights = \cf7 self\cf5 . newWeights\
+        \cf7 self\cf5 .newWeights = []\
+\
+\
+    \cf4 def \cf12 activate\cf5 (\cf7 self\cf4 ,\cf5 x):\
+        
+\f0\i \cf2 '''\
+        given a value returns its value after activation(depending on the activation function used).\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf4 if \cf7 self\cf5 .activationFunction == \cf8 "sigmoid"\cf5 :\
+           \cf4 return \cf5 sigmoid(x)\
+        \cf10 #else:\
+        #    return linear(x)\
+\
+\
+    \cf4 def \cf12 calculate\cf5 (\cf7 self\cf4 , \cf5 input):\
+        
+\f0\i \cf2 '''\
+        Given an input, it will calculate the output\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf7 self\cf5 .input = input\
+        \cf7 self\cf5 .output = \cf7 self\cf5 .activate(np.dot(input\cf4 ,\cf7 self\cf5 .weights) + \cf7 self\cf5 .bias)\
+        \cf4 return \cf7 self\cf5 .output\
+\
+\
+    \cf4 def \cf12 backpropagationLastLayer\cf5 (\cf7 self\cf4 , \cf5 target):\
+        \cf4 for \cf5 index\cf4 , \cf5 PreviousNeuronOutput \cf4 in \cf11 enumerate\cf5 (\cf7 self\cf5 .input):\
+            \cf7 self\cf5 .delta = mse_prime(\cf7 self\cf5 .output\cf4 ,\cf5 target)*sigmoid_prime(\cf7 self\cf5 .output)\
+            \cf7 self\cf5 .newWeights.append(\cf7 self\cf5 .weights[index] - \cf7 self\cf5 .learnR * \cf7 self\cf5 .delta * PreviousNeuronOutput)\
+\
+\
+\
+\
+\
+\cf4 class \cf5 FullyConnectedLayer():\
+    \cf4 def \cf6 __init__\cf5 (\cf7 self\cf4 , \cf5 inputLen\cf4 , \cf5 numOfNeurons = \cf9 5\cf4 , \cf5 activationFun = \cf8 "sigmoid"\cf4 , \cf5 learningRate = \cf9 .1\cf4 , \cf5 weights = \cf4 None, \cf5 bias = \cf4 None\cf5 ):\
+        \cf7 self\cf5 .inputLen = inputLen\
+        \cf7 self\cf5 .neuronsNum = numOfNeurons\
+        \cf7 self\cf5 .activationFun = activationFun\
+        \cf7 self\cf5 .learningRate = learningRate\
+        \cf7 self\cf5 .weights = weights\
+        \cf7 self\cf5 .bias = bias\
+        \cf7 self\cf5 .layerOutput = []\
+\
+        \cf4 if \cf5 weights \cf4 is None\cf5 :\
+            \cf7 self\cf5 .neurons = [Neuron(\cf13 inputLen\cf5 =\cf7 self\cf5 .inputLen\cf4 , \cf13 activationFun\cf5 =activationFun\cf4 , \cf13 learningRate\cf5 =\cf7 self\cf5 .learningRate\cf4 , \cf13 weights\cf5 =\cf7 self\cf5 .weights) \cf4 for \cf10 i \cf4 in \cf11 range\cf5 (numOfNeurons)]\
+        \cf4 else\cf5 :\
+            \cf7 self\cf5 .neurons = [Neuron(\cf13 inputLen\cf5 =\cf7 self\cf5 .inputLen\cf4 , \cf13 activationFun\cf5 =activationFun\cf4 , \cf13 learningRate\cf5 =\cf7 self\cf5 .learningRate\cf4 , \cf13 weights\cf5 =\cf7 self\cf5 .weights[i]\cf4 , \cf13 bias\cf5 = \cf7 self\cf5 .bias[i]) \cf4 for \cf5 i \cf4 in \cf11 range\cf5 (numOfNeurons)]\
+\
+\
+    \cf4 def \cf12 calculate\cf5 (\cf7 self\cf4 , \cf5 input):\
+        
+\f0\i \cf2 '''\
+        Will calculate the output of all the neurons in the layer.\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf7 self\cf5 .layerOutput = []\
+        \cf4 for \cf5 neuron \cf4 in \cf7 self\cf5 .neurons:\
+            \cf7 self\cf5 .layerOutput.append(neuron.calculate(input))\
+\
+        \cf4 return \cf7 self\cf5 .layerOutput\
+\
+    \cf4 def \cf12 backPropagateLast\cf5 (\cf7 self\cf4 , \cf5 target):\
+        \cf4 for \cf5 targetIndex\cf4 , \cf5 neuron \cf4 in \cf11 enumerate\cf5 (\cf7 self\cf5 .neurons):\
+            \cf10 #neuron.update_weight(   target[targetIndex], self.layerOutput)\
+            \cf5 neuron.backpropagationLastLayer(\cf13 target\cf5 =target[targetIndex])\
+\
+    \cf4 def \cf12 updateWeights\cf5 (\cf7 self\cf5 ):\
+        \cf4 for \cf5 neuron \cf4 in \cf7 self\cf5 .neurons:\
+            neuron.updateWeight()\
+\
+\
+\cf4 class \cf5 NeuralNetwork():\
+    \cf4 def \cf6 __init__\cf5 (\cf7 self\cf4 , \cf5 inputLen\cf4 , \cf5 layersNum = \cf9 2\cf4 , \cf5 neuronsNum = \cf4 None, \cf5 activationVector = \cf9 0\cf4 , \cf5 lossFunction = \cf8 "MSE"\cf4 , \cf5 learningRate = \cf9 .1\cf4 , \cf5 weights = \cf4 None, \cf5 bias = \cf4 None\cf5 ):\
+        \cf7 self\cf5 .inputLen   = inputLen\
+        \cf7 self\cf5 .layersNum  = layersNum\
+        \cf7 self\cf5 .activationVector = activationVector\
+        \cf7 self\cf5 .lossFunction = lossFunction\
+        \cf7 self\cf5 .learningRate = learningRate\
+        \cf7 self\cf5 .weights = weights\
+        \cf7 self\cf5 .bias = bias\
+\
+        \cf4 if \cf5 neuronsNum \cf4 is None \cf5 :  \cf10 #By default, each layer will have 5 neurons, unless specified.\
+            \cf7 self\cf5 .neuronsNum = [\cf9 3 \cf4 for \cf10 i \cf4 in \cf11 range\cf5 (layersNum)]\
+        \cf4 else\cf5 :\
+            \cf7 self\cf5 .neuronsNum = neuronsNum\
+\
+        \cf4 if \cf5 activationVector \cf4 is None or \cf5 activationVector != layersNum: \cf10 #This is the default vector if a problem is encountered or the vector is not provided when the class is created.\
+            \cf7 self\cf5 .activationVector = [\cf8 "sigmoid" \cf4 for \cf10 i \cf4 in \cf11 range\cf5 (layersNum)]\
+\
+        \cf10 #Define the layers of the networks with the respective neurons:\
+        \cf7 self\cf5 .layers = []\
+        inputLenLayer = inputLen\
+\
+        \cf4 if \cf5 weights \cf4 is None\cf5 :\
+            \cf4 for \cf5 i \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .layersNum):\
+                \cf7 self\cf5 .layers.append(\
+                    FullyConnectedLayer(\cf13 numOfNeurons\cf5 =\cf7 self\cf5 .neuronsNum[i]\cf4 , \cf13 activationFun\cf5 =\cf7 self\cf5 .activationVector[i]\cf4 , \cf13 inputLen\cf5 =inputLenLayer\cf4 , \cf13 learningRate\cf5 =\cf7 self\cf5 .learningRate\cf4 , \cf13 weights\cf5 =\cf7 self\cf5 .weights))\
+                \cf10 # The number of weights in one layer depends on the number of neurons in the previous layer:\
+                \cf5 inputLenLayer = \cf7 self\cf5 .neuronsNum[i]\
+\
+\
+        \cf4 else\cf5 :\
+            \cf4 for \cf5 i \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .layersNum):\
+                \cf7 self\cf5 .layers.append(\
+                    FullyConnectedLayer(\cf13 numOfNeurons\cf5 =\cf7 self\cf5 .neuronsNum[i]\cf4 , \cf13 activationFun\cf5 =\cf7 self\cf5 .activationVector[i]\cf4 , \cf13 inputLen\cf5 =inputLenLayer\cf4 , \cf13 learningRate\cf5 =\cf7 self\cf5 .learningRate\cf4 , \cf13 weights\cf5 =\cf7 self\cf5 .weights[i]\cf4 , \cf13 bias\cf5 =\cf7 self\cf5 .bias[i]))\
+                \cf10 # The number of weights in one layer depends on the number of neurons in the previous layer:\
+                \cf5 inputLenLayer = \cf7 self\cf5 .neuronsNum[i]\
+\
+\
+\
+    \cf4 def \cf12 showWeights\cf5 (\cf7 self\cf5 ):\
+        \cf10 #Function which just goes through each neuron in each layer and displays the weights.\
+        inputLenLayer \cf5 = \cf7 self\cf5 .inputLen\
+        \cf4 for \cf5 i \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .layersNum):\
+            \cf11 print\cf5 (\cf8 " "\cf5 )\
+            \cf4 for \cf5 k \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .neuronsNum[i]):\
+                \cf11 print\cf5 (\cf7 self\cf5 .layers[i].neurons[k].weights)\
+\
+            \cf10 inputLenLayer \cf5 = \cf7 self\cf5 .neuronsNum[i]\
+\
+    \cf4 def \cf12 showBias\cf5 (\cf7 self\cf5 ):\
+        \cf10 #Function which just goes through each neuron in each layer and displays the weights.\
+        inputLenLayer \cf5 = \cf7 self\cf5 .inputLen\
+        \cf4 for \cf5 i \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .layersNum):\
+            \cf11 print\cf5 (\cf8 " "\cf5 )\
+            \cf4 for \cf5 k \cf4 in \cf11 range\cf5 (\cf7 self\cf5 .neuronsNum[i]):\
+                \cf11 print\cf5 (\cf7 self\cf5 .layers[i].neurons[k].bias)\
+\
+            \cf10 inputLenLayer \cf5 = \cf7 self\cf5 .neuronsNum[i]\
+\
+\
+\
+    \cf4 def \cf12 calculate\cf5 (\cf7 self\cf4 , \cf5 input):\
+        
+\f0\i \cf2 '''\
+        given an input calculates the output of the network.\
+        input should be a list.\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf5 output = input\
+        \cf4 for \cf5 layer \cf4 in \cf7 self\cf5 .layers:\
+            output = layer.calculate(output)\
+\
+        \cf4 return \cf5 output\
+\
+    \cf4 def \cf12 backPropagate\cf5 (\cf7 self\cf4 , \cf5 target):\
+        \cf7 self\cf5 .layers[-\cf9 1\cf5 ].backPropagateLast(target)\
+\
+        \cf10 #for layerIndex, layer in enumerate(reversed(self.layers)): #need to go in backward order\
+\
+        \cf7 self\cf5 .layers[-\cf9 1\cf5 ].updateWeights()\
+\
+\
+\
+    \cf4 def \cf12 calculateLoss\cf5 (\cf7 self\cf4 ,\cf5 input\cf4 ,\cf5 desired_output\cf4 , \cf5 function = \cf8 "MSE"\cf5 ):\
+        
+\f0\i \cf2 '''\
+        Given an input and desired output, calculate the loss.\
+        Can be implemented with MSE and binary cross.\
+        
+\f2\b :param
+\f0\b0  input:\
+        
+\f2\b :param
+\f0\b0  output:\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf10 N \cf5 = \cf11 len\cf5 (input)\
+        output = \cf7 self\cf5 .calculate(input)\
+        \cf4 if \cf5 function == \cf8 "MSE"\cf5 :\
+            error = mse(output\cf4 , \cf5 desired_output)\
+        \cf4 else\cf5 :\
+            binary_cross_entropy_loss(output\cf4 , \cf5 desired_output)\
+\
+        \cf4 return \cf5 error\
+\
+\
+\
+    \cf4 def \cf12 train\cf5 (\cf7 self\cf5 ):\
+        
+\f0\i \cf2 '''\
+        Given a single input and desired output, it will take one step of gradient descent.\
+        
+\f2\b :return
+\f0\b0 :\
+        '''\
+        
+\f1\i0 \cf10 x\cf5 =\cf9 0\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\cf4 def \cf12 main\cf5 ():\
+\
+    \cf10 #The number of neurons in the last layers should be equal to the number of classes.\
+    #there are easier ways to do this, but I'm just following the instructions.\
+\
+    
+\f0\i \cf2 '''\
+    #Random weights:\
+    Newweights = None\
+    model = NeuralNetwork(inputLen=2, layersNum = 2, neuronsNum = [3,2], activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = Newweights)\
+    model.showWeights()\
+    out= model.calculate([1,0])\
+    '''\
+\
+\
+\
+    
+\f1\i0 \cf10 #Let's try the class example by setting the bias and weights:\
+    \cf5 Newweights = [[[\cf9 .15\cf4 ,\cf9 .20\cf5 ]\cf4 , \cf5 [\cf9 .25\cf4 , \cf9 .30\cf5 ]]\cf4 , \cf5 [[\cf9 .40\cf4 , \cf9 .45\cf5 ]\cf4 , \cf5 [\cf9 .5\cf4 , \cf9 .55\cf5 ]]]\
+    newBias = [[\cf9 .35\cf4 ,\cf9 .35\cf5 ]\cf4 ,\cf5 [\cf9 .6\cf4 ,\cf9 .6\cf5 ]]\
+    model = NeuralNetwork(\cf13 inputLen\cf5 =\cf9 2\cf4 , \cf13 layersNum\cf5 =\cf9 2\cf4 , \cf13 neuronsNum\cf5 =[\cf9 2\cf4 , \cf9 2\cf5 ]\cf4 , \cf13 activationVector\cf5 =\cf9 0\cf4 , \cf13 lossFunction\cf5 =\cf8 "MSE"\cf4 ,\
+                          \cf13 learningRate\cf5 =\cf9 .5\cf4 , \cf13 weights\cf5 =Newweights\cf4 , \cf13 bias \cf5 = newBias)\
+    model.showWeights()\
+    model.showBias()\
+\
+    \cf11 print\cf5 (\cf8 "forward pass:"\cf5 )\
+    \cf11 print\cf5 (model.calculate([\cf9 .05\cf4 ,\cf9 .1\cf5 ]))\
+\
+\
+    model.backPropagate(\cf13 target\cf5 = [\cf9 .01\cf4 , \cf9 .99\cf5 ])\
+    \cf11 print\cf5 (\cf8 "after BackProp: "\cf5 )\
+    model.showWeights()\
+\
+\
+\cf4 if \cf5 __name__ == \cf8 "__main__"\cf5 :\
+    main()\
+\
+}

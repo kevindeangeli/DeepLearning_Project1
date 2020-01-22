@@ -14,9 +14,5 @@ from errorFunctions import *
 a= np.array([1,2,3,4,7])
 b= np.array([3,3,3,3,3])
 
-print(mse(a,b))
-
-for i,k in enumerate(b):
+for i in range(2,3):
     print(i)
-    print(k)
-    print(" ")
