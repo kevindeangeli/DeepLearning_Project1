@@ -14,5 +14,7 @@ from errorFunctions import *
 a= np.array([1,2,3,4,7])
 b= np.array([3,3,3,3,3])
 
-for i in range(2,3):
-    print(i)
+print(len(a))
+x = a[1:len(a)]
+
+print(x)

@@ -209,8 +209,6 @@ class Network(object):
         plt.show()
 
 
-
-
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.

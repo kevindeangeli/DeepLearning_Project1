@@ -5,9 +5,10 @@ Date: 2020-01-15
 '''
 
 
-from errorFunctions import *
-from activation import *
+from errorFunctions import * #I put the error functions and their derivatives in a different file.
+from activation import *     #I put the activation functions and their derivatives in a different file.
 import numpy as np
+import sys
 import matplotlib.pyplot as plt
 
 
@@ -36,8 +37,9 @@ class Neuron():
 
 
     def updateWeight(self):
-        self.weights = self. newWeights
+        self.weights = self.newWeights
         self.newWeights = []
+        self.bias = self.bias - self.learnR*self.delta
 
 
     def activate(self,x):
@@ -128,9 +130,9 @@ class FullyConnectedLayer():
 
 
 class NeuralNetwork():
-    def __init__(self, inputLen, layersNum = 2, neuronsNum = None, activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = None, bias = None):
-        self.inputLen   = inputLen
-        self.layersNum  = layersNum
+    def __init__(self, neuronsNum = None, activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = None, bias = None):
+        self.inputLen   = neuronsNum[0]
+        self.layersNum  = len(neuronsNum)-1 #Don't count the first one (input).
         self.activationVector = activationVector
         self.lossFunction = lossFunction
         self.learningRate = learningRate
@@ -140,14 +142,14 @@ class NeuralNetwork():
         if neuronsNum is None :  #By default, each layer will have 5 neurons, unless specified.
             self.neuronsNum = [3 for i in range(layersNum)]
         else:
-            self.neuronsNum = neuronsNum
+            self.neuronsNum = neuronsNum[1:len(neuronsNum)] #Don't count he first one.
 
-        if activationVector is None or activationVector != layersNum: #This is the default vector if a problem is encountered or the vector is not provided when the class is created.
-            self.activationVector = ["sigmoid" for i in range(layersNum)]
+        if activationVector is None or activationVector != self.layersNum: #This is the default vector if a problem is encountered or the vector is not provided when the class is created.
+            self.activationVector = ["sigmoid" for i in range(self.layersNum)]
 
         #Define the layers of the networks with the respective neurons:
         self.layers = []
-        inputLenLayer = inputLen
+        inputLenLayer = self.inputLen
 
         if weights is None:
             for i in range(self.layersNum):
@@ -180,7 +182,7 @@ class NeuralNetwork():
         #Function which just goes through each neuron in each layer and displays the weights.
         inputLenLayer = self.inputLen
         for i in range(self.layersNum):
-            print(" ")
+            #print(" ")
             for k in range(self.neuronsNum[i]):
                 print(self.layers[i].neurons[k].bias)
 
@@ -232,52 +234,139 @@ class NeuralNetwork():
 
 
 
-    def train(self):
+    def train(self, input, target):
         '''
-        Basically, do forward and backpropagation all together here. 
+        Basically, do forward and backpropagation all together here.
         Given a single input and desired output, it will take one step of gradient descent.
         :return:
         '''
-        x=0
+        self.calculate(input)
+        self.backPropagate(target)
 
 
 
-
-
-
-
-
-
-def main():
-
-    #The number of neurons in the last layers should be equal to the number of classes.
-    #there are easier ways to do this, but I'm just following the instructions.
-
-    '''
-    #Random weights:
-    Newweights = None
-    model = NeuralNetwork(inputLen=2, layersNum = 2, neuronsNum = [3,2], activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = Newweights)
-    model.showWeights()
-    out= model.calculate([1,0])
-    '''
-
-
+def doExample():
+    print( "--- Example ---")
 
     #Let's try the class example by setting the bias and weights:
     Newweights = [[[.15,.20], [.25, .30]], [[.40, .45], [.5, .55]]]
     newBias = [[.35,.35],[.6,.6]]
-    model = NeuralNetwork(inputLen=2, layersNum=2, neuronsNum=[2, 2], activationVector=0, lossFunction="MSE",
+    model = NeuralNetwork(neuronsNum=[2, 2, 2], activationVector=['sigmoid', 'sigmoid'], lossFunction="MSE",
                           learningRate=.5, weights=Newweights, bias = newBias)
+
+
+
+    print("Original weights and biases of the network: ")
     model.showWeights()
     model.showBias()
 
-    print("forward pass:")
+
+    print("\nForward pass: ")
     print(model.calculate([.05,.1]))
 
-
+    #model.train(input= [.05,.1], target=[.01, .99]) #you could use just this function to do all at once.
     model.backPropagate(target= [.01, .99])
-    print("after BackProp: ")
+    print("\nAfter BackProp, the updated weights are:")
     model.showWeights()
+
+def doAnd():
+    print( "\n--- AND ---")
+    x = [[1,1],[1,0],[0,1], [0,0]]
+    y = [[1],[0], [0], [0]]
+
+    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="MSE",
+                          learningRate=6, weights=None, bias=None)
+
+
+    print("-------- Before training ---------")
+    print("Model's Weights:")
+    model.showWeights()
+    print("\nModel's Bias:")
+    model.showBias()
+
+
+
+    for i in range(10000):
+        for index in range(len(x)):
+            model.train(input=x[index],target=y[index])
+
+    print("---------------------------------")
+    print("\nPredictions: ")
+    for index2 in range(len(x)):
+        print("\nPredict: ", x[index2])
+        print(model.calculate(x[index2]))
+
+    print("-------- After training ---------")
+    print("Model's Weights:")
+    model.showWeights()
+    print("\nModel's Bias:")
+    model.showBias()
+
+
+
+
+def doXor():
+    print( "\n--- XOR ---")
+    x = [[0,1],[1,0],[1,1], [0,0]]
+    y = [[1],[1], [0], [0]]
+
+    model = NeuralNetwork(neuronsNum=[2, 1, 1], activationVector=['sigmoid', 'sigmoid'], lossFunction="MSE",
+                          learningRate=5, weights=None, bias=None)
+
+    print("-------- Before training ---------")
+    print("Model's Weights:")
+    model.showWeights()
+    print("\nModel's Bias:")
+    model.showBias()
+
+
+
+    for i in range(10000): #It works with 100000 and alpha = 1.5 but it takes a minute
+        for index in range(len(x)):
+            model.train(input=x[index],target=y[index])
+
+    print("---------------------------------")
+    print("\nPredictions: ")
+    for index2 in range(len(x)):
+        print("\nPredict: ", x[index2])
+        print(model.calculate(x[index2]))
+
+    print("-------- After training ---------")
+    print("Model's Weights:")
+    model.showWeights()
+    print("\nModel's Bias:")
+    model.showBias()
+
+
+#def showLoss
+
+
+
+def main():
+    program_name = sys.argv[0]
+    arguments = sys.argv[1:]
+    print(arguments)
+
+    #Input validation:
+    if len(arguments) != 1:
+        print("Input only one of these: example, and, or xor")
+
+
+    input = ["example", "and", "xor"]
+    userInput = input[2]
+
+
+    if userInput is "example":
+        doExample()
+    elif userInput is "and":
+        doAnd()
+    elif userInput is "xor":
+        doXor()
+    else:
+        #Input validation
+        print("Input Options: example, and, or xor")
+        return 0
+
 
 
 if __name__ == "__main__":
