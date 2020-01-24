@@ -15,3 +15,6 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     x = z * (1 - z)
     return z * (1 - z)
+
+def linear(x):
+    return x

@@ -16,10 +16,11 @@ import matplotlib.pyplot as plt
 
 class Neuron():
 
-    def __init__(self,inputLen, activationFun = "sigmoid", learningRate = .5, weights = None, bias = None):
+    def __init__(self,inputLen, activationFun = "sigmoid", lossFunction="mse" , learningRate = .5, weights = None, bias = None):
         self.inputLen = inputLen
         self.learnR = learningRate
         self.activationFunction = activationFun
+        self.lossFunction = lossFunction
 
         self.output = None #for backprop.
         self.input = None   #saves the input to the neuron for backprop.
@@ -36,25 +37,44 @@ class Neuron():
             self.weights = weights
             self.bias = bias
 
+        if activationFun is "sigmoid":
+            self.activate = sigmoid
+            self.activation_prime = sigmoid_prime
+        else:
+            self.activate = linear
 
+        if lossFunction is "mse":
+            self.loss = mse
+            self.loss_prime= mse_prime
+        else:
+            self.loss = crossEntropy
+            self.loss_prime = crossEntropy_prime
+
+    def activate(self):
+        pass
+    def loss(self):
+        pass
+    def activation_prime(self):
+        pass
+    def loss_prime(self):
+        pass
 
     def updateWeight(self):
         self.weights = self.newWeights
         self.newWeights = []
         self.bias = self.newBias
         self.newBias = None
-        #self.bias = self.bias - self.learnR*self.delta
 
 
-    def activate(self,x):
-        '''
-        given a value returns its value after activation(depending on the activation function used).
-        :return:
-        '''
-        if self.activationFunction == "sigmoid":
-           return sigmoid(x)
-        #else:
-        #    return linear(x)
+    # def activate(self,x):
+    #     '''
+    #     given a value returns its value after activation(depending on the activation function used).
+    #     :return:
+    #     '''
+    #     if self.activationFunction == "sigmoid":
+    #        return sigmoid(x)
+    #     elif self.activationFunction == "linear":
+    #         return x
 
 
     def calculate(self, input):
@@ -68,16 +88,14 @@ class Neuron():
 
 
     def backpropagationLastLayer(self, target):
-        self.delta = mse_prime(self.output, target) * sigmoid_prime(self.output)
+        self.delta = self.loss_prime(self.output, target) * self.activation_prime(self.output)
         self.newBias = self.bias - self.learnR*self.delta
         for index, PreviousNeuronOutput in enumerate(self.input):
             self.newWeights.append(self.weights[index] - self.learnR * self.delta * PreviousNeuronOutput)
 
     def backpropagation(self, sumDelta):
         #sumDelta will be computed at the layer level. Since it requires weights from multiple neurons.
-        self.delta = sumDelta * sigmoid_prime(self.output)
-        x1= sumDelta
-        x2= sigmoid_prime(self.output)
+        self.delta = sumDelta * self.activation_prime(self.output)
         self.newBias = self.bias - self.learnR * self.delta
         for index, PreviousNeuronOutput in enumerate(self.input):
             self.newWeights.append(self.weights[index] - self.learnR * self.delta * self.input[index])
@@ -90,7 +108,7 @@ class Neuron():
 
 
 class FullyConnectedLayer():
-    def __init__(self, inputLen, numOfNeurons = 5, activationFun = "sigmoid", learningRate = .1, weights = None, bias = None):
+    def __init__(self, inputLen, numOfNeurons = 5, activationFun = "sigmoid", lossFunction= "mse", learningRate = .1, weights = None, bias = None):
         self.inputLen = inputLen
         self.neuronsNum = numOfNeurons
         self.activationFun = activationFun
@@ -98,11 +116,12 @@ class FullyConnectedLayer():
         self.weights = weights
         self.bias = bias
         self.layerOutput = []
+        self.lossFunction = lossFunction
 
         if weights is None:
-            self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun, learningRate=self.learningRate, weights=self.weights) for i in range(numOfNeurons)]
+            self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun,lossFunction=self.lossFunction ,learningRate=self.learningRate, weights=self.weights) for i in range(numOfNeurons)]
         else:
-            self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun, learningRate=self.learningRate, weights=self.weights[i], bias= self.bias[i]) for i in range(numOfNeurons)]
+            self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun,lossFunction=self.lossFunction, learningRate=self.learningRate, weights=self.weights[i], bias= self.bias[i]) for i in range(numOfNeurons)]
 
 
     def calculate(self, input):
@@ -142,7 +161,7 @@ class FullyConnectedLayer():
 
 
 class NeuralNetwork():
-    def __init__(self, neuronsNum = None, activationVector = 0, lossFunction = "MSE", learningRate = .1, weights = None, bias = None):
+    def __init__(self, neuronsNum = None, activationVector = 0, lossFunction = "mse", learningRate = .1, weights = None, bias = None):
         self.inputLen   = neuronsNum[0]
         self.layersNum  = len(neuronsNum)-1 #Don't count the first one (input).
         self.activationVector = activationVector
@@ -151,10 +170,10 @@ class NeuralNetwork():
         self.weights = weights
         self.bias = bias
 
-        if neuronsNum is None :  #By default, each layer will have 5 neurons, unless specified.
+        if neuronsNum is None :  #By default, each layer will have 3 neurons, unless specified.
             self.neuronsNum = [3 for i in range(layersNum)]
         else:
-            self.neuronsNum = neuronsNum[1:len(neuronsNum)] #Don't count he first one.
+            self.neuronsNum = neuronsNum[1:len(neuronsNum)] #Don't count the first one.
 
         if activationVector is None or activationVector != self.layersNum: #This is the default vector if a problem is encountered or the vector is not provided when the class is created.
             self.activationVector = ["sigmoid" for i in range(self.layersNum)]
@@ -166,7 +185,7 @@ class NeuralNetwork():
         if weights is None:
             for i in range(self.layersNum):
                 self.layers.append(
-                    FullyConnectedLayer(numOfNeurons=self.neuronsNum[i], activationFun=self.activationVector[i], inputLen=inputLenLayer, learningRate=self.learningRate, weights=self.weights))
+                    FullyConnectedLayer(numOfNeurons=self.neuronsNum[i], activationFun=self.activationVector[i],lossFunction=self.lossFunction, inputLen=inputLenLayer, learningRate=self.learningRate, weights=self.weights))
                 # The number of weights in one layer depends on the number of neurons in the previous layer:
                 inputLenLayer = self.neuronsNum[i]
 
@@ -227,7 +246,7 @@ class NeuralNetwork():
 
 
 
-    def calculateLoss(self,input,target, function = "MSE"):
+    def calculateLoss(self,input,target, function = "mse"):
         '''
         Given an input and desired output, calculate the loss.
         Can be implemented with MSE and binary cross.
@@ -237,10 +256,10 @@ class NeuralNetwork():
         '''
         N = len(input)
         output = self.calculate(input)
-        if function == "MSE":
+        if function == "mse":
             error = mse(output, target)
         else:
-            binary_cross_entropy_loss(output, target)
+            crossEntropy(output, target)
 
         return error
 
@@ -265,7 +284,7 @@ def doExample():
     #Let's try the class example by setting the bias and weights:
     Newweights = [[[.15,.20], [.25, .30]], [[.40, .45], [.5, .55]]]
     newBias = [[.35,.35],[.6,.6]]
-    model = NeuralNetwork(neuronsNum=[2, 2, 2], activationVector=['sigmoid', 'sigmoid'], lossFunction="MSE",
+    model = NeuralNetwork(neuronsNum=[2, 2, 2], activationVector=['sigmoid', 'sigmoid'], lossFunction="mse",
                           learningRate=.5, weights=Newweights, bias = newBias)
 
 
@@ -293,7 +312,7 @@ def doAnd():
     x = [[1,1],[1,0],[0,1], [0,0]]
     y = [[1],[0], [0], [0]]
 
-    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="MSE",
+    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
                           learningRate=6, weights=None, bias=None)
 
 
@@ -330,7 +349,7 @@ def doXor():
     y = [[0],[1], [1], [0]]
 
     print("First model: [2,1] (Single Perceptron) : \n")
-    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="MSE",
+    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
                           learningRate=6, weights=None, bias=None)
 
     print("-------- Before training ---------")
@@ -361,7 +380,7 @@ def doXor():
     print("Second model: [2,2,1] (Single Perceptron) : \n")
 
 
-    model = NeuralNetwork(neuronsNum=[2, 2, 1], activationVector=['sigmoid', 'sigmoid'], lossFunction="MSE",
+    model = NeuralNetwork(neuronsNum=[2, 2, 1], activationVector=['sigmoid', 'sigmoid'], lossFunction="mse",
                           learningRate=.5, weights=None, bias=None)
 
     print("-------- Before training ---------")
@@ -369,7 +388,6 @@ def doXor():
     model.showWeights()
     print("\nModel's Bias:")
     model.showBias()
-
 
 
     for i in range(10000): #It works with 100000 and alpha = 1.5 but it takes a minute
@@ -407,7 +425,7 @@ def showLoss(learningRate, data = "and"):
 
     errorAvrage = [] #This will contain the Ys of the plot.
     for i in learningRate:
-        model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="MSE",
+        model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
                           learningRate=i, weights=None, bias=None)
 
         errorListPerLearningRate = []
@@ -429,11 +447,6 @@ def showLoss(learningRate, data = "and"):
     ax.grid()
     plt.savefig(title)
     plt.show()
-
-
-
-
-
 
 
 
@@ -463,7 +476,9 @@ def main():
 
     #learningRateArr = np.linspace(0.1, 12, num=50)
     #showLoss(learningRateArr, data="and")
-    doExample()
+    #doExample()
+
+    doAnd()
 
 if __name__ == "__main__":
     main()

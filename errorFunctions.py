@@ -7,8 +7,14 @@ Date: 2020-01-16
 
 import numpy as np
 
-def binary_cross_entropy_loss(prediction, output):
-    return 0
+def crossEntropy(prediction, output):
+    if output == 1:
+      return -log(prediction)
+    else:
+      return -log(1 - prediction)
+
+def crossEntropy_prime(prediction, output):
+    return -((output/prediction) - ((1-output)/(1-prediction)))
 
 def mse(prediction, output):
     if len(prediction) == 1:
