@@ -11,7 +11,10 @@ def binary_cross_entropy_loss(prediction, output):
     return 0
 
 def mse(prediction, output):
-    return ((prediction - output)**2).mean(axis=0)
+    if len(prediction) == 1:
+        return (prediction[0]-output[0])**2
+    else:
+        return ((prediction - output)**2).mean(axis=0)
 
 def mse_prime(output, target):
     return output-target
