@@ -2,6 +2,21 @@
 Created by: Kevin De Angeli
 Email: kevindeangeli@utk.edu
 Date: 2020-01-15
+
+Note: The activation and loss function are in two separate files
+which will be included in the zip file.
+
+General description:
+The NeuralNetwork objects will contain objects of the FullyConnectedLayer class.
+The FullyConnectedLayer contains objects of the Neuron class. Each of the Neuron
+objects contains their own weights, biase, and delta value.
+
+I created a method in the Neuron function called "mini_Delta" which is used to
+compute the weight (given a certain index) times the delta of that neuron. This
+is used for backpropagation. The backpropagation function in the NeuralNetwork first
+computes the Sum Delta values for the layers, and these are passed to individual
+layers so that the weights of each neuron can be updated.
+
 '''
 
 
@@ -12,8 +27,6 @@ import numpy as np
 import sys
 import matplotlib.pyplot as plt
 
-
-
 class Neuron():
 
     def __init__(self,inputLen, activationFun = "sigmoid", lossFunction="mse" , learningRate = .5, weights = None, bias = None):
@@ -22,11 +35,11 @@ class Neuron():
         self.activationFunction = activationFun
         self.lossFunction = lossFunction
 
-        self.output = None #for backprop.
-        self.input = None   #saves the input to the neuron for backprop.
-        self.newWeights = [] #saves new weight but it doesn't update until the end of backprop. (method: updateWeight)
+        self.output = None #Saving the output of the neuron (after feedforward) makes things easy for backprop
+        self.input = None   #Saves the input to the neuron for backprop.
+        self.newWeights = [] #Saves new weight but it doesn't update until the end of backprop. (method: updateWeight)
         self.newBias = None
-        self.delta = None
+        self.delta = None #individual deltas required for backprop.
 
         if weights is None:
             #set them to random:
@@ -37,6 +50,7 @@ class Neuron():
             self.weights = weights
             self.bias = bias
 
+        #this series of if statement define the activation and loss functions, and their derivatives.
         if activationFun is "sigmoid":
             self.activate = sigmoid
             self.activation_prime = sigmoid_prime
@@ -50,6 +64,8 @@ class Neuron():
             self.loss = crossEntropy
             self.loss_prime = crossEntropy_prime
 
+    #The following pictures will be defined based on the parameters
+    #that is passed to the object.
     def activate(self):
         pass
     def loss(self):
@@ -59,23 +75,12 @@ class Neuron():
     def loss_prime(self):
         pass
 
+    #This function is called after backpropagation.
     def updateWeight(self):
         self.weights = self.newWeights
         self.newWeights = []
         self.bias = self.newBias
         self.newBias = None
-
-
-    # def activate(self,x):
-    #     '''
-    #     given a value returns its value after activation(depending on the activation function used).
-    #     :return:
-    #     '''
-    #     if self.activationFunction == "sigmoid":
-    #        return sigmoid(x)
-    #     elif self.activationFunction == "linear":
-    #         return x
-
 
     def calculate(self, input):
         '''
@@ -86,7 +91,7 @@ class Neuron():
         self.output = self.activate(np.dot(input,self.weights) + self.bias)
         return self.output
 
-
+    #The delta of the last layer is computed a little different, so it has its own function.
     def backpropagationLastLayer(self, target):
         self.delta = self.loss_prime(self.output, target) * self.activation_prime(self.output)
         self.newBias = self.bias - self.learnR*self.delta
@@ -100,10 +105,9 @@ class Neuron():
         for index, PreviousNeuronOutput in enumerate(self.input):
             self.newWeights.append(self.weights[index] - self.learnR * self.delta * self.input[index])
 
+    #Used to compute the sumation of the Deltas for backprop.
     def mini_Delta(self, index):
         return self.delta * self.weights[index]
-
-
 
 
 
@@ -118,6 +122,7 @@ class FullyConnectedLayer():
         self.layerOutput = []
         self.lossFunction = lossFunction
 
+        #Random weights or user defined weights:
         if weights is None:
             self.neurons = [Neuron(inputLen=self.inputLen, activationFun=activationFun,lossFunction=self.lossFunction ,learningRate=self.learningRate, weights=self.weights) for i in range(numOfNeurons)]
         else:
@@ -137,17 +142,17 @@ class FullyConnectedLayer():
 
     def backPropagateLast(self, target):
         for targetIndex, neuron in enumerate(self.neurons):
-            #neuron.update_weight(   target[targetIndex], self.layerOutput)
             neuron.backpropagationLastLayer(target=target[targetIndex])
 
     def updateWeights(self):
         for neuron in self.neurons:
             neuron.updateWeight()
 
+    #Computes the sum of the deltas times their weights based on the number of neurons in the previous layer.
     def deltaSum(self):
         delta_sumArr  = []
         x=len(self.neurons[0].weights)
-        for i in range(len(self.neurons[0].weights)): #Weights in the RightLayer = #neurons in the LeftLayer
+        for i in range(len(self.neurons[0].weights)): #Number of Weights in the RightLayer = Number of neurons in the LeftLayer
             delta_sum = 0
             for index, neuron in enumerate(self.neurons):
                 delta_sum += neuron.mini_Delta(i)
@@ -155,9 +160,9 @@ class FullyConnectedLayer():
         return delta_sumArr
 
     def backpropagation(self, deltaArr):
+        #Each neuron needs a delta to update their weights:
         for index, neuron in enumerate(self.neurons):
             neuron.backpropagation(deltaArr[index])
-
 
 
 class NeuralNetwork():
@@ -173,15 +178,15 @@ class NeuralNetwork():
         if neuronsNum is None :  #By default, each layer will have 3 neurons, unless specified.
             self.neuronsNum = [3 for i in range(layersNum)]
         else:
-            self.neuronsNum = neuronsNum[1:len(neuronsNum)] #Don't count the first one.
+            self.neuronsNum = neuronsNum[1:len(neuronsNum)] #Don't count the first one (input)
 
-        if activationVector is None or activationVector != self.layersNum: #This is the default vector if a problem is encountered or the vector is not provided when the class is created.
+        if activationVector is None or activationVector != self.layersNum: #This is the default vector if one is not provided when the class is created.
             self.activationVector = ["sigmoid" for i in range(self.layersNum)]
 
         #Define the layers of the networks with the respective neurons:
         self.layers = []
         inputLenLayer = self.inputLen
-
+        #This convoluted loop creates the layers and neurons with the appropite number of weights in each.
         if weights is None:
             for i in range(self.layersNum):
                 self.layers.append(
@@ -189,7 +194,7 @@ class NeuralNetwork():
                 # The number of weights in one layer depends on the number of neurons in the previous layer:
                 inputLenLayer = self.neuronsNum[i]
 
-
+        #Used defined weights:
         else:
             for i in range(self.layersNum):
                 self.layers.append(
@@ -210,7 +215,7 @@ class NeuralNetwork():
             inputLenLayer = self.neuronsNum[i]
 
     def showBias(self):
-        #Function which just goes through each neuron in each layer and displays the weights.
+        #Function which just goes through each neuron in each layer and displays the bias.
         inputLenLayer = self.inputLen
         for i in range(self.layersNum):
             #print(" ")
@@ -218,8 +223,6 @@ class NeuralNetwork():
                 print(self.layers[i].neurons[k].bias)
 
             inputLenLayer = self.neuronsNum[i]
-
-
 
     def calculate(self, input):
         '''
@@ -238,6 +241,7 @@ class NeuralNetwork():
         layersCounter = self.layersNum+1
 
         for i in range(2,layersCounter):
+            #Calculate the sum delta for the following layer to update the previous layer.
             deltaArr = self.layers[-i + 1].deltaSum()
             self.layers[-i].backpropagation(deltaArr)
 
@@ -250,9 +254,6 @@ class NeuralNetwork():
         '''
         Given an input and desired output, calculate the loss.
         Can be implemented with MSE and binary cross.
-        :param input:
-        :param output:
-        :return:
         '''
         N = len(input)
         output = self.calculate(input)
@@ -262,7 +263,6 @@ class NeuralNetwork():
             crossEntropy(output, target)
 
         return error
-
 
 
     def train(self, input, target, showLoss = False):
@@ -277,8 +277,10 @@ class NeuralNetwork():
         self.backPropagate(target)
 
 
-
 def doExample():
+    '''
+    This function does the "Example" forward and backpop pass required for the assignemnt.
+    '''
     print( "--- Example ---")
 
     #Let's try the class example by setting the bias and weights:
@@ -308,6 +310,9 @@ def doExample():
     model.showBias()
 
 def doAnd():
+    '''
+    This function trains a single neuron to learn the "AND" logical operator.
+    '''
     print( "\n--- AND ---")
     x = [[1,1],[1,0],[0,1], [0,0]]
     y = [[1],[0], [0], [0]]
@@ -344,6 +349,11 @@ def doAnd():
 
 
 def doXor():
+    '''
+    This function creates two models: 1) A single neuron model which is not able to
+    learn the XOR operator, and 2) A model with two neurons in the hidden layer,
+    and 1 output neuron which successfully learns XOR.
+    '''
     print( "\n--- XOR ---")
     x = [[1,1],[1,0],[0,1], [0,0]]
     y = [[0],[1], [1], [0]]
@@ -373,12 +383,8 @@ def doXor():
     model.showWeights()
     print("\nModel's Bias:")
     model.showBias()
-
-
     print("\n\n ***************************************************\n\n")
-
     print("Second model: [2,2,1] (Single Perceptron) : \n")
-
 
     model = NeuralNetwork(neuronsNum=[2, 2, 1], activationVector=['sigmoid', 'sigmoid'], lossFunction="mse",
                           learningRate=.5, weights=None, bias=None)
@@ -388,7 +394,6 @@ def doXor():
     model.showWeights()
     print("\nModel's Bias:")
     model.showBias()
-
 
     for i in range(10000): #It works with 100000 and alpha = 1.5 but it takes a minute
         for index in range(len(x)):
@@ -408,6 +413,9 @@ def doXor():
 
 
 def showLoss(learningRate, data = "and"):
+    '''
+    This function creates the Learnign Rate vs Loss plot for both: AND and XOR.
+    '''
     if data is "and":
         print("Loss for AND")
         x = [[1,1],[1,0],[0,1], [0,0]]
@@ -448,37 +456,78 @@ def showLoss(learningRate, data = "and"):
     plt.savefig(title)
     plt.show()
 
+def lossVSEpoch(data="and"):
+    '''
+    This function creates the plots that displays the loss as a function of the number of epochs.
+    '''
+    if data is "and":
+        print("Loss for AND")
+        x = [[1,1],[1,0],[0,1], [0,0]]
+        y = [[1],[0], [0], [0]]
+        title = "EpochVsErrorAND_MLE.png"
+        figTitle= "Number of Epochs Vs Error - AND "
+        learnRate = 5.5
+
+    else:
+        print("Loss for XOR")
+        x = [[1, 1], [1, 0], [0, 1], [0, 0]]
+        y = [[0], [1], [1], [0]]
+        title = "EpochVsErrorXOR_MLE.png"
+        figTitle= "Number of Epochs Vs Error - XOR "
+        learnRate = 2
+
+
+    errorArr = [] #This will contain the Ys of the plot.
+
+    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
+                          learningRate=learnRate, weights=None, bias=None)
+    epochsNums = 100
+    for i in range(epochsNums):
+        errorList = []
+        for index in range(len(x)): #Train the algorithm with entire dataset
+            model.train(input=x[index], target=y[index])
+
+        for index2 in range(len(x)):
+            errorList.append(model.calculateLoss(input=x[index2], target=y[index2])) #Collect individual errors
+
+        errorArr.append(np.average(errorList))
+
+
+    fig, ax = plt.subplots(figsize=(8, 8), dpi=100, facecolor='w', edgecolor='k')
+    ax.plot(np.linspace(0,epochsNums,epochsNums), errorArr)
+    ax.set(xlabel='Number of Epochs', ylabel='Loss',title=figTitle)
+    ax.grid()
+    plt.savefig(title)
+    plt.show()
 
 
 def main():
-    # program_name = sys.argv[0]
-    # arguments = sys.argv[1:]
-    # print(arguments)
-    #
-    # # Input validation:
-    # if len(arguments) != 1:
-    #     print("Input only one of these: example, and, or xor")
-    #
-    # input = ["example", "and", "xor"]
-    # userInput = input[2]
-    #
-    # if userInput is "example":
-    #     doExample()
-    # elif userInput is "and":
-    #     doAnd()
-    # elif userInput is "xor":
-    #     doXor()
-    # else:
-    #     # Input validation
-    #     print("Input Options: example, and, or xor")
-    #     return 0
+    program_name = sys.argv[0]
+    #input = sys.argv[1:] #Get input from the console.
+    # Input validation:
+    #if len(input) != 1:
+    #    print("Input only one of these: example, and, or xor")
+    #    return 0
 
+    # This is just to run it from the editor instead of the console.
+    input = ["example", "and", "xor"]
+    input = [input[1]]
 
-    #learningRateArr = np.linspace(0.1, 12, num=50)
-    #showLoss(learningRateArr, data="and")
-    #doExample()
-
-    doAnd()
+    if input[0] == "example":
+        doExample()
+    elif input[0] == "and":
+        doAnd()
+    elif input[0] == "xor":
+        doXor()
+    elif input[0] == "lossLearning":
+        learningRateArr = np.linspace(0.1, 12, num=50)
+        showLoss(learningRateArr, data="and")
+    elif input[0] == "lossEpoch":
+        lossVSEpoch(data="xor")
+    else:
+        # Input validation
+        print("Input Options: example, and, or xor")
+        return 0
 
 if __name__ == "__main__":
     main()
