@@ -3,13 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5c3a3359-8c91-4849-b34b-5a7f67e85924" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LearningRateVsErrorAND_MLE.png" beforeDir="false" afterPath="$PROJECT_DIR$/LearningRateVsErrorAND_MLE.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LearningRateVsErrorXOR_MLE.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup1.rtf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup2.rtf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup3.rtf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DL___Project_1.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scratch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/EpochVsErrorAND_MLE.png" beforeDir="false" afterPath="$PROJECT_DIR$/plots/EpochVsErrorAND_MLE.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/EpochVsErrorXOR_MLE.png" beforeDir="false" afterPath="$PROJECT_DIR$/plots/EpochVsErrorXOR_MLE.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/LearningRateVsErrorAND_MLE.png" beforeDir="false" afterPath="$PROJECT_DIR$/plots/LearningRateVsErrorAND_MLE.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/LearningRateVsErrorXOR_MLE.png" beforeDir="false" afterPath="$PROJECT_DIR$/plots/LearningRateVsErrorXOR_MLE.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,38 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/errorFunctions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="107" column="61" lean-forward="true" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/numpy/core/multiarray.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11685">
-              <caret line="791" selection-start-line="791" selection-end-line="791" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+            <state relative-caret-position="8976">
+              <caret line="533" column="9" lean-forward="true" selection-start-line="533" selection-start-column="9" selection-end-line="533" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -66,8 +38,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>0.3147440008742571</find>
-      <find>showBias</find>
       <find>0.0355507632535708</find>
       <find>0.4167674271222598</find>
       <find>0.49648623702594746</find>
@@ -96,6 +66,8 @@
       <find>mse</find>
       <find>self.loss</find>
       <find>inputLen</find>
+      <find>0.528918948307519</find>
+      <find>0.7792991203673414</find>
     </findStrings>
     <replaceStrings>
       <replace>sigmoid_prime</replace>
@@ -111,13 +83,13 @@
         <option value="$PROJECT_DIR$/caca.py" />
         <option value="$PROJECT_DIR$/scarchCode2.py" />
         <option value="$PROJECT_DIR$/scratchCode.py" />
-        <option value="$PROJECT_DIR$/main2.py" />
         <option value="$PROJECT_DIR$/scratchCode3.py" />
         <option value="$PROJECT_DIR$/main3.py" />
         <option value="$PROJECT_DIR$/main4.py" />
         <option value="$PROJECT_DIR$/errorFunctions.py" />
         <option value="$PROJECT_DIR$/activation.py" />
         <option value="$PROJECT_DIR$/scratch.py" />
+        <option value="$PROJECT_DIR$/main2.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -145,6 +117,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -156,7 +129,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -178,7 +150,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.main2">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,6 +165,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Project1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -267,35 +261,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratchCode3" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Project1" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scratchCode3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main2" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.scratch" />
         <item itemvalue="Python.main4" />
         <item itemvalue="Python.main3" />
-        <item itemvalue="Python.scratchCode3" />
       </list>
     </recent_temporary>
   </component>
@@ -314,22 +286,25 @@
       <workItem from="1579968944077" duration="787000" />
       <workItem from="1579983287758" duration="208000" />
       <workItem from="1580076249736" duration="792000" />
+      <workItem from="1580154397453" duration="630000" />
+      <workItem from="1580222790325" duration="78000" />
+      <workItem from="1580229936027" duration="4546000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120801000" />
+    <option name="totallyTimeSpent" value="126055000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.076537915" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.046494994" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.41385767" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4499314" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.35665295" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -338,7 +313,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32921812" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32921812" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32921812" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -352,9 +327,20 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>104</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project1$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1579795110050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project1$main.coverage" NAME="main Coverage Results" MODIFIED="1579969038236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project1$main2.coverage" NAME="main2 Coverage Results" MODIFIED="1580234131624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project1$main.coverage" NAME="main Coverage Results" MODIFIED="1580230214541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project1$scratchCode.coverage" NAME="scratchCode Coverage Results" MODIFIED="1579367078397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project1$main3.coverage" NAME="main3 Coverage Results" MODIFIED="1579873827951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project1$main4.coverage" NAME="main4 Coverage Results" MODIFIED="1579890858211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -387,7 +373,6 @@
     <entry file="file://$PROJECT_DIR$/scarchCode2.py" />
     <entry file="file://$PROJECT_DIR$/main3.py" />
     <entry file="file://$PROJECT_DIR$/scratchCode3.py" />
-    <entry file="file://$PROJECT_DIR$/main2.py" />
     <entry file="file://$PROJECT_DIR$/scratchCode.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -399,7 +384,7 @@
     <entry file="file://$PROJECT_DIR$/scratch.py" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/numpy/core/multiarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11685">
+        <state relative-caret-position="392">
           <caret line="791" selection-start-line="791" selection-end-line="791" />
         </state>
       </provider>
@@ -407,21 +392,28 @@
     <entry file="file://$PROJECT_DIR$/activation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="526" column="27" lean-forward="true" selection-end-line="542" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/errorFunctions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="13" />
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="107" column="61" lean-forward="true" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+        <state relative-caret-position="8976">
+          <caret line="533" column="9" lean-forward="true" selection-start-line="533" selection-start-column="9" selection-end-line="533" selection-end-column="9" />
         </state>
       </provider>
     </entry>

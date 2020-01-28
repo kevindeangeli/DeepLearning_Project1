@@ -94,6 +94,8 @@ class Neuron():
     #The delta of the last layer is computed a little different, so it has its own function.
     def backpropagationLastLayer(self, target):
         self.delta = self.loss_prime(self.output, target) * self.activation_prime(self.output)
+        x1=  self.loss_prime(self.output, target)
+        x2= self.activation_prime(self.output)
         self.newBias = self.bias - self.learnR*self.delta
         for index, PreviousNeuronOutput in enumerate(self.input):
             self.newWeights.append(self.weights[index] - self.learnR * self.delta * PreviousNeuronOutput)
@@ -156,7 +158,7 @@ class FullyConnectedLayer():
             delta_sum = 0
             for index, neuron in enumerate(self.neurons):
                 delta_sum += neuron.mini_Delta(i)
-                delta_sumArr.append(delta_sum)
+            delta_sumArr.append(delta_sum)
         return delta_sumArr
 
     def backpropagation(self, deltaArr):
@@ -360,7 +362,7 @@ def doXor():
 
     print("First model: [2,1] (Single Perceptron) : \n")
     model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
-                          learningRate=6, weights=None, bias=None)
+                          learningRate=1.9, weights=None, bias=None)
 
     print("-------- Before training ---------")
     print("Model's Weights:")
@@ -384,7 +386,7 @@ def doXor():
     print("\nModel's Bias:")
     model.showBias()
     print("\n\n ***************************************************\n\n")
-    print("Second model: [2,2,1] (Single Perceptron) : \n")
+    print("Second model: [2,2,1] (Hidden layer Perceptron) : \n")
 
     model = NeuralNetwork(neuronsNum=[2, 2, 1], activationVector=['sigmoid', 'sigmoid'], lossFunction="mse",
                           learningRate=.5, weights=None, bias=None)
@@ -422,6 +424,7 @@ def showLoss(learningRate, data = "and"):
         y = [[1],[0], [0], [0]]
         title = "LearningRateVsErrorAND_MLE.png"
         figTitle= "Learning Rate Vs Error - AND "
+        modelArch = [2, 1]
 
     else:
         print("Loss for XOR")
@@ -429,11 +432,12 @@ def showLoss(learningRate, data = "and"):
         y = [[0], [1], [1], [0]]
         title = "LearningRateVsErrorXOR_MLE.png"
         figTitle= "Learning Rate Vs Error - XOR "
+        modelArch = [2,2,1]
 
 
     errorAvrage = [] #This will contain the Ys of the plot.
     for i in learningRate:
-        model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
+        model = NeuralNetwork(neuronsNum=modelArch, activationVector=['sigmoid'], lossFunction="mse",
                           learningRate=i, weights=None, bias=None)
 
         errorListPerLearningRate = []
@@ -467,6 +471,7 @@ def lossVSEpoch(data="and"):
         title = "EpochVsErrorAND_MLE.png"
         figTitle= "Number of Epochs Vs Error - AND "
         learnRate = 5.5
+        modelArch = [2,1]
 
     else:
         print("Loss for XOR")
@@ -474,12 +479,14 @@ def lossVSEpoch(data="and"):
         y = [[0], [1], [1], [0]]
         title = "EpochVsErrorXOR_MLE.png"
         figTitle= "Number of Epochs Vs Error - XOR "
-        learnRate = 2
+        learnRate = .5
+        modelArch = [2,2,1]
+
 
 
     errorArr = [] #This will contain the Ys of the plot.
 
-    model = NeuralNetwork(neuronsNum=[2, 1], activationVector=['sigmoid'], lossFunction="mse",
+    model = NeuralNetwork(neuronsNum=modelArch, activationVector=None, lossFunction="mse",
                           learningRate=learnRate, weights=None, bias=None)
     epochsNums = 100
     for i in range(epochsNums):
@@ -503,15 +510,15 @@ def lossVSEpoch(data="and"):
 
 def main():
     program_name = sys.argv[0]
-    #input = sys.argv[1:] #Get input from the console.
+    input = sys.argv[1:] #Get input from the console.
     # Input validation:
-    #if len(input) != 1:
-    #    print("Input only one of these: example, and, or xor")
-    #    return 0
+    if len(input) != 1:
+        print("Input only one of these: example, and, or xor")
+        return 0
 
     # This is just to run it from the editor instead of the console.
-    input = ["example", "and", "xor"]
-    input = [input[1]]
+    #input = ["example", "and", "xor","lossLearning", "lossEpoch"]
+    #input = [input[3]]
 
     if input[0] == "example":
         doExample()
@@ -523,11 +530,13 @@ def main():
         learningRateArr = np.linspace(0.1, 12, num=50)
         showLoss(learningRateArr, data="and")
     elif input[0] == "lossEpoch":
-        lossVSEpoch(data="xor")
+        lossVSEpoch(data="and")
     else:
         # Input validation
         print("Input Options: example, and, or xor")
         return 0
+
+
 
 if __name__ == "__main__":
     main()
